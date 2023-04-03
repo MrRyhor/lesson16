@@ -1,40 +1,37 @@
 class TMoney {
-    #money = 0
+    #money
     constructor(courseValue, initMoney) {
         this.courseUSD = courseValue
         this.Money = initMoney
     }
-    get MoneyInUAH() {
+    get Money() {
         return this.#money
     }
-    set MoneyInUAH(val) {
-        if (this.#money + val < 0)
+    set Money(val) {
+        if (val < 0)
             throw new Error(document.write('<p>Нет средств на счету</p>'))
-        this.#money += val
+        this.#money = val
     }
     toString() {
-        return `Balance = ${(this.Money / this.courseUSD).toFixed(2)}. Course USD = ${this.courseUSD}`
+        return `Balance = ${this.Money.toFixed(2)}. Course USD = ${this.courseUSD}`
     }
 
     increaseMoney(val) {
-        return this.Money = this.Money + val
+        return this.Money = this.Money + val / this.courseUSD
     }
     decreaseMoney(val) {
-        return this.Money = this.Money - val
+        return this.Money = this.Money - val / this.courseUSD
     }
-    increaseAmountInUAHBy100 (amount) {
-        let val = 100        
-        return this.Money = this.increaseMoney(amount) + val
-    }
-    decreaseAmountInUAHBy100 (amount) {
-        let val =100
-        return this.Money = this.decreaseMoney(amount) + val
-    }
+    getCourseUSDIfIncreaseAmountInUAHBy100 () {
+        let val = 100
+        let balanceInUAH = this.Money * this.courseUSD        
+        return (balanceInUAH + val) / this.Money
+    }    
 }
 
-let money = new TMoney(37, 23500)
+let money = new TMoney(37, 500)
 money.increaseMoney(12000)
 money.decreaseMoney(12000)
-money.increaseAmountInUAHBy100(12000)
-money.decreaseAmountInUAHBy100(12000)
+document.write(`<p>Курс при котором сумма в гривнах увеличится на 100 UAH = ${money.getCourseUSDIfIncreaseAmountInUAHBy100()}</p>`)
+
 result1.innerHTML = money
