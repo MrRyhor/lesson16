@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:regular,700');
+
+body {
+    font-family: 'Lato';
+    background-color: #00a1a3;
+    background-image: linear-gradient(to right, #005083, #23704e);
+}
+
+h1 {
+    display: block;
+    max-width: 170px;
+    margin: 0 auto;
+    text-shadow: 2px 2px 4px #000;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgb(251, 255, 26);
+    font-weight: 700;
+}
+
+.text {
+    padding-top: 20px;
+    margin: 0 auto;
+    text-align: center;
+    color: #fff;
+    max-width: 1000px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.result {
+    padding-top: 50px;
+    margin: 0 auto;
+    text-align: center;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    position: relative;
+    font-size: 32px;
+}
+
+.result::after {
+    content: " ";
+    background: url('../img/left-arrow.png') no-repeat;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 80px;
+    left: 48.7%;
+    transform: rotate(-90deg);
+    z-index: 1;
+    color: #fff;
+    object-fit: cover;
+    animation-name: down-arrow;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    margin-bottom: 10px;
+}
+
+@keyframes down-arrow {
+    0% {
+        top: 80px;
+    }
+
+    100% {
+        top: 100px;
+    }
+}
+
+#result1 {
+    padding-top: 70px;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    color: rgb(251, 255, 26);
+    text-transform: uppercase;
+    font-size: 32px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px #000;
+    margin-bottom: 20px;
+}
+
+span {
+    color: rgb(255, 82, 82);    
+}
+
+ul {
+    max-width: 50px;
+    margin: 0 auto;
+    text-shadow: 2px 2px 4px #000;
+
+}
+
+li {
+    color: rgb(251, 255, 26);
+    text-shadow: 2px 2px 4px #000;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+table {
+    text-align: center;
+    color: rgb(251, 255, 26);
+    text-shadow: 2px 2px 4px #000;
+    border: 1px solid #fff;
+    margin: 0 auto;
+}
+
+td {
+    padding: 5px;
+}
+
+img {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    display: block;
+    margin: 0 auto;
+    height: 300px;
+    margin-bottom: 30px;   
+}
+
+h2 {
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 4px #000;
+    text-transform: uppercase;
+    font-size: 32px;
+}
+
+p {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    color: rgb(251, 255, 26);
+    text-transform: uppercase;
+    font-size: 32px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px #000;
+    margin-bottom: 7px;
+}
