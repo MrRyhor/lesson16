@@ -11,7 +11,7 @@ class TDate {
         return this.#day
     }
     set day(newDate) {
-        if (newDate <= 0 || newDate > 31)
+        if (newDate < 1 || newDate > 31)
             throw new Error('Incorrect number of the day')
         this.#day = newDate
     }
@@ -19,7 +19,7 @@ class TDate {
         return this.#month
     }
     set month(newMonth) {
-        if (newMonth <= 0 || newMonth > 12)
+        if (newMonth < 1 || newMonth > 12)
             throw new Error('Incorrect number of the month')
         this.#month = newMonth
     }
@@ -36,25 +36,62 @@ class TDate {
         return `${this.day} / ${this.month} / ${this.year}`
     }
     //========================= Методы =========================================================
+    getQntDaysInMonth(month) {
+        let qntDays
+        switch (month) {
+            case 4:
+            case 6:
+            case 9:
+            case 11: qntDays = 30
+                break;
+            case 2: (((this.year % 4 === 0) && (this.year % 100 !== 0)) || (this.year % 400 === 0)) ? qntDays = 29 : qntDays = 28
+                break;
+            default: qntDays = 31
+                break;
+        }
+        return qntDays
+    }
+
     increaseDay(val) {
-        this.year += Math.floor((this.day + val) / 365)
-        this.month += (Math.floor((this.day + val) / 30)) % 12
-        this.day = ((this.day - 1 + val) % 30) + 1
-        return `${this.day} / ${this.month} / ${this.year}`
+        let shiftedDay = this.day  // вводим переменную, чтоб избежать ввода неккоректного значения в this.day
+        let qntDaysOfMonth = this.getQntDaysInMonth(this.month)
+        shiftedDay += val
+        while (shiftedDay > qntDaysOfMonth) {
+            shiftedDay -= qntDaysOfMonth
+            this.increaseMonth(1)
+        }
+        return this.day = shiftedDay
     }
+
     decreaseDay(val) {
-        this.year += Math.floor((this.day - val) / 365)
-        this.month += ((Math.floor((this.day - val) / 30)) % 12) + 12
-        this.day = (((this.day - 1 - val) % 30) + 1) + 30
-        return `${this.day} / ${this.month} / ${this.year}`
+        let shiftedDay = this.day
+        shiftedDay -= val
+        while (shiftedDay < 1) {
+            this.decreaseMonth(1)
+            let qntDaysOfMonth = this.getQntDaysInMonth(this.month)
+            shiftedDay += qntDaysOfMonth
+        }
+        return this.day = shiftedDay
     }
+    // increaseDay(val) {
+    //     this.year += Math.floor((this.day + val) / 365)
+    //     this.month += (Math.floor((this.day + val) / 30)) % 12
+    //     this.day = ((this.day - 1 + val) % 30) + 1
+    //     return `${this.day} / ${this.month} / ${this.year}`
+    // }
+    // decreaseDay(val) {
+    //     this.year += Math.floor((this.day - val) / 365)
+    //     this.month += ((Math.floor((this.day - val) / 30)) % 12) + 12
+    //     this.day = (((this.day - 1 - val) % 30) + 1) + 30
+    //     return `${this.day} / ${this.month} / ${this.year}`
+    // }
     increaseMonth(val) {
         this.month = ((this.month - 1 + val) % 12) + 1
         this.year += Math.floor((this.month + val) / 12)
         return `${this.day} / ${this.month} / ${this.year}`
     }
     decreaseMonth(val) {
-        this.month = (((this.month - 1 - val) % 12) + 1) + 12
+        this.month = ((this.month - (val % 12) + 11) % 12) + 1
         this.year -= Math.floor((this.month + val) / 12)
         return `${this.day} / ${this.month} / ${this.year}`
     }
@@ -68,11 +105,7 @@ class TDate {
     }
 }
 
-let date = new TDate(31, 1, 2023)
+let date = new TDate(1, 2, 2023)
 date.increaseDay(30)
-// date.decreaseDay(1335)
-// date.increaseMonth(24)
-// date.decreaseMonth(33)
-// date.increaseYear(12)
-// date.decreaseYear(22)
+date.decreaseDay(30)
 result1.innerHTML = date
