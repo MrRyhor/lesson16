@@ -19,19 +19,17 @@ class Firma {
 
     }
     //==================== Методы ===================================================
-    howOldOfFirm(year, month) {
-        let currentMonth = month - this.date.Month
-        if (currentMonth < 0) return year - this.date.Year
-        else return year - this.date.Year + 1
+    companyAge(year, month) {
+        return Foundation.howOldOfFirm(foundationDate, year, month)
     }
     getAllBranches() {
-        return branches 
+        return Branch.getAllBranches(branches)
     }
     getServicesByPrice(price) {
-        return services.getServicesByPrice(price)
+        return Service.getServicesByPrice(price)
     }
     getServicesByDeadline(numDays) {
-        return services.getServicesByDeadline(numDays)
+        return Service.getServicesByDeadline(numDays)
     }    
 }
 
@@ -57,10 +55,15 @@ class Foundation {
         if (val < 1 || val > 12)
             throw new Error('Value is incorrect')
         this.#month = val
-    }
+    }    
     toString() {
         return `<p>${this.Year} / ${this.Month}</p>`
     }
+    static howOldOfFirm (foundationDate, year, month) {
+        let currentMonth = month - foundationDate.Month
+        if (currentMonth < 0) return year - foundationDate.Year
+        else return year - foundationDate.Year + 1        
+    }    
 }
 
 class Service {
@@ -73,7 +76,7 @@ class Service {
         return `<p>Name :${this.name} - ${this.price} - Deadline:${this.deadline}</p>`
     }
     //================== Методы ========================================================
-    getServicesByPrice(price) {
+    static getServicesByPrice(price) {
         let arr = []
         for (let i = 0; i < services.price.length; i++) {
             if (services.price[i] <= price)
@@ -81,7 +84,7 @@ class Service {
         }
         return `[${arr}]`
     }
-    getServicesByDeadline(numDays) {
+    static getServicesByDeadline(numDays) {
         let arr = []
         for (let i = 0; i < services.deadlineInDays.length; i++) {
             if (services.deadlineInDays[i] <= numDays)
@@ -98,6 +101,9 @@ class Branch {
         this.street = street
         this.building = build
     }
+    static getAllBranches(branches){
+        return `<p>Countries: <span>${branches.country}</span><br> Cities: <span>${branches.city}</span></p>`
+    }
     toString() {
         return `<p>Countries: <span>${this.country}</span><br> Cities: <span>${this.city}</span></p>`
     }
@@ -105,18 +111,17 @@ class Branch {
 
 let foundationDate = new Foundation(2001, 10)
 console.log(foundationDate)
+console.log(Foundation.howOldOfFirm(foundationDate,2023, 11))
 
 let services = new Service(['faktoring', 'checking the system', 'consulting'], [250, 550, 400], [14, 16, 7])
 console.log(services)
-//console.log(services.getServicesByPrice(100))
-//console.log(services.getServicesByDeadline(14))
 
 let branches = new Branch(['Poland', 'Ukraine'], ['Warsaw', 'Uzhorod'], ['Pory', 'Shevchenko'], [12, 78])
 console.log(branches)
 
 let firma = new Firma('Fool', foundationDate, services, branches)
 console.log(firma)
-document.write(`<p>1) How old this firm? <span>${firma.howOldOfFirm(2023, 11)} years</span></p>`)
+document.write(`<p>1) How old this firm? <span>${firma.companyAge(2023, 11)} years</span></p>`)
 document.write(`<p>2) Firm has a branches in: <span>${firma.getAllBranches()}</span></p>`)
 document.write(`<p>3) For this price we can offer: <span>${firma.getServicesByPrice(300)}</span></p>`)
 document.write(`<p>4) For this deadline we can offer: <span>${firma.getServicesByDeadline(14)}</span></p>`)

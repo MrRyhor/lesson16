@@ -38,8 +38,9 @@ class TBankomat {
         for (let i = 0; i < this.Value.length; i++) {
             maxSum += this.Value[i] * this.Count[i]
         }
-        return maxSum
+        return maxSum      
     }
+    
 
     getMoneyFromBankomat(val) {
         let arr = []

@@ -53,14 +53,15 @@ class TDate {
     }
 
     increaseDay(val) {
-        let shiftedDay = this.day  // вводим переменную, чтоб избежать ввода неккоректного значения в this.day
         let qntDaysOfMonth = this.getQntDaysInMonth(this.month)
+        let shiftedDay = this.day  // вводим переменную, чтоб избежать ввода неккоректного значения в this.day при +val
         shiftedDay += val
         while (shiftedDay > qntDaysOfMonth) {
             shiftedDay -= qntDaysOfMonth
             this.increaseMonth(1)
         }
-        return this.day = shiftedDay
+
+        return this.day = shiftedDay                
     }
 
     decreaseDay(val) {
@@ -88,24 +89,28 @@ class TDate {
     increaseMonth(val) {
         this.month = ((this.month - 1 + val) % 12) + 1
         this.year += Math.floor((this.month + val) / 12)
-        return `${this.day} / ${this.month} / ${this.year}`
+        return this.month
     }
     decreaseMonth(val) {
         this.month = ((this.month - (val % 12) + 11) % 12) + 1
         this.year -= Math.floor((this.month + val) / 12)
-        return `${this.day} / ${this.month} / ${this.year}`
+        return this.month
     }
     increaseYear(val) {
         this.year += val
-        return `${this.day} / ${this.month} / ${this.year}`
+        return this.year
     }
     decreaseYear(val) {
         this.year -= val
-        return `${this.day} / ${this.month} / ${this.year}`
+        return this.year
     }
 }
 
 let date = new TDate(1, 2, 2023)
-date.increaseDay(30)
-date.decreaseDay(30)
+date.increaseDay(28)
+date.decreaseDay(28)
+date.decreaseMonth(22)
+date.increaseMonth(22)
+date.increaseYear(5)
+date.decreaseYear(5)
 result1.innerHTML = date
